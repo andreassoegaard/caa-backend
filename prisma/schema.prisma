@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  password String
+  name     String?
+}
+
+model RefreshTokens {
+  id    Int    @id @default(autoincrement())
+  token String @unique
+}
+
+model RatingCategories {
+  id            Int             @id @default(autoincrement())
+  name          String
+  ratingFactors RatingFactors[]
+  companies     Companies[]
+}
+
+model RatingFactors {
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  description          String?
+  importance           Int
+  category             RatingCategories       @relation(fields: [categoryId], references: [id])
+  categoryId           Int
+  ratingFactorsAnswers RatingFactorsAnswers[]
+}
+
+model RatingFactorsAnswers {
+  id             Int           @id @default(autoincrement())
+  answer         String
+  rating         Int
+  company        Companies     @relation(fields: [companyId], references: [id])
+  companyId      Int
+  ratingFactor   RatingFactors @relation(fields: [ratingFactorId], references: [id])
+  ratingFactorId Int
+}
+
+model Companies {
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  symbol               String
+  ratingCategory       RatingCategories       @relation(fields: [ratingCategoryId], references: [id])
+  ratingCategoryId     Int
+  ratingFactorsAnswers RatingFactorsAnswers[]
+  quotes               Quotes[]
+}
+
+model Quotes {
+  id                                Int       @id @default(autoincrement())
+  company                           Companies @relation(fields: [companyId], references: [id])
+  companyId                         Int
+  createdAt                         DateTime  @default(now())
+  currency                          String
+  targetPriceHigh                   Int
+  targetPriceLow                    Int
+  targetPriceMean                   Int
+  targetPriceMedian                 Int
+  heldPercentInsiders               Int
+  heldPercentInstitutions           Int
+  regularMarketChange               Int
+  regularMarketChangePercent        Int
+  regularMarketTime                 Int
+  regularMarketPrice                Int
+  regularMarketDayHigh              Int
+  regularMarketDayRange             String
+  regularMarketDayLow               Int
+  regularMarketVolume               Int
+  sharesShort                       Int
+  sharesShortPrevMonth              Int
+  regularMarketPreviousClose        Int
+  bid                               Int
+  ask                               Int
+  bidSize                           Int
+  askSize                           Int
+  regularMarketOpen                 Int
+  averageDailyVolume3Month          Int
+  averageDailyVolume10Day           Int
+  beta                              Int
+  fiftyTwoWeekLowChange             Int
+  fiftyTwoWeekLowChangePercent      Int
+  fiftyTwoWeekRange                 String
+  fiftyTwoWeekHighChange            Int
+  fiftyTwoWeekHighChangePercent     Int
+  fiftyTwoWeekLow                   Int
+  fiftyTwoWeekHigh                  Int
+  dividendDate                      BigInt
+  earningsTimestamp                 BigInt
+  earningsTimestampStart            BigInt
+  earningsTimestampEnd              BigInt
+  trailingAnnualDividendRate        Int
+  dividendsPerShare                 Int
+  trailingAnnualDividendYield       Int
+  epsTrailingTwelveMonths           Int
+  sharesOutstanding                 Int
+  bookValue                         Int
+  fiftyDayAverage                   Int
+  fiftyDayAverageChange             Int
+  fiftyDayAverageChangePercent      Int
+  twoHundredDayAverage              Int
+  twoHundredDayAverageChange        Int
+  twoHundredDayAverageChangePercent Int
+  marketCap                         BigInt
+  priceToBook                       Int
+  sourceInterval                    Int
+  gmtOffSetMilliseconds             Int
+  firstTradeDateMilliseconds        BigInt
+  priceHint                         Int
+  totalCash                         Int
+  floatShares                       BigInt
+  ebitda                            BigInt
+  shortRatio                        Int
+}
