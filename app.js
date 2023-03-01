@@ -1,15 +1,13 @@
+const port = 3000;
 const express = require("express");
 const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
 
 // Load environment variables
 dotenv.config();
 
 // Declare the express app
 const app = express();
-const port = 3000;
-
-// Middlewares
-app.use(express.json());
 
 // Swagger stuff
 const swaggerJsdoc = require("swagger-jsdoc"),
@@ -40,6 +38,10 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 const auth = require("./endpoints/auth");
 const ratingCategories = require("./endpoints/ratingCategories");
 const ratingFactors = require("./endpoints/ratingFactors");
+
+// Next auth endpoints
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Use the endpoints
 app.use("/auth", auth);
