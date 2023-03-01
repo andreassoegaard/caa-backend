@@ -70,9 +70,9 @@ app.use((req, res, next) => {
 });
 
 // Use the endpoints
-app.use("/auth", auth);
-app.use("/ratingCategories", ratingCategories);
-app.use("/ratingFactors", ratingFactors);
+app.use("/api/auth", auth);
+app.use("/api/ratingCategories", ratingCategories);
+app.use("/api/ratingFactors", ratingFactors);
 
 // Start the server
 app.listen(port, () => {
