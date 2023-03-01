@@ -28,16 +28,16 @@ const options = {
       },
     ],
   },
-  apis: ["./endpoints/*.js"],
+  apis: ["./api/*.js"],
 };
 
 const specs = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // Get the endpoints
-const auth = require("../endpoints/auth");
-const ratingCategories = require("../endpoints/ratingCategories");
-const ratingFactors = require("../endpoints/ratingFactors");
+const auth = require("./api/auth");
+const ratingCategories = require("./api/ratingCategories");
+const ratingFactors = require("./api/ratingFactors");
 
 app.use(helmet());
 app.disable("x-powered-by");
