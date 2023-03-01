@@ -47,7 +47,15 @@ app.use(express.json());
 // Add headers before the routes are defined
 app.use((req, res, next) => {
   // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+  const allowedOrigins = [
+    "http://localhost:3001",
+    "https://caa-frontend.vercel.app",
+    "https://caafinance.dk",
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
 
   // Request methods you wish to allow
   res.setHeader(
