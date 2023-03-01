@@ -35,9 +35,9 @@ const specs = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // Get the endpoints
-const auth = require("./endpoints/auth");
-const ratingCategories = require("./endpoints/ratingCategories");
-const ratingFactors = require("./endpoints/ratingFactors");
+const auth = require("../endpoints/auth");
+const ratingCategories = require("../endpoints/ratingCategories");
+const ratingFactors = require("../endpoints/ratingFactors");
 
 app.use(helmet());
 app.disable("x-powered-by");
