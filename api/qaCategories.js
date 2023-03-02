@@ -101,7 +101,8 @@ router.get("/", async (req, res) => {
     });
   } catch (e) {
     res.status(400).json({
-      message: "Kunne ikke oprette kategorien",
+      message: "Kunne ikke hente kategorierne",
+      error: e,
     });
   }
 });
