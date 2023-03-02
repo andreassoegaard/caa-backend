@@ -73,11 +73,11 @@ app.use((req, res, next) => {
 
 // Use the endpoints
 const auth = require("./api/auth");
-const ratingCategories = require("./api/qaCategories");
-const ratingFactors = require("./api/qaFactors");
+const qaCategories = require("./api/qaCategories");
+const qaFactors = require("./api/qaFactors");
 app.use("/api/auth", auth);
-app.use("/api/qaCategories", ratingCategories);
-app.use("/api/qaFactors", ratingFactors);
+app.use("/api/qaCategories", qaCategories);
+app.use("/api/qaFactors", qaFactors);
 
 // Start the server
 app.listen(port, () => {
