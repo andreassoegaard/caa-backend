@@ -93,7 +93,6 @@ router.post("/", async (req, res) => {
  *
  */
 router.get("/", async (req, res) => {
-  console.log(prisma);
   try {
     const results = await prisma.qaCategories.findMany();
     res.json({

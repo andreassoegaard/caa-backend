@@ -42,9 +42,11 @@ app.use(express.json());
 app.use((req, res, next) => {
   // Website you wish to allow to connect
   const allowedOrigins = [
+    "http://localhost:3000",
     "http://localhost:3001",
     "https://caa-frontend.vercel.app",
     "https://caafinance.dk",
+    "https://www.caafinance.dk",
   ];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
