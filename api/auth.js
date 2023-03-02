@@ -23,12 +23,14 @@ const generateRefreshToken = (user) => {
 
 router.post("/create", async (req, res) => {
   try {
+    const name = req.body.name;
     const email = req.body.email;
     const password = await bcrypt.hash(req.body.password, hashCost);
     await prisma.users.create({
       data: {
         email,
         password,
+        name,
       },
     });
     res.json({

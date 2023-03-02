@@ -9,7 +9,7 @@ const prisma = require("../db/prisma");
  * @swagger
  * components:
  *   schemas:
- *     RatingCategory:
+ *     QaCategory:
  *       type: object
  *       required:
  *         - name
@@ -23,7 +23,7 @@ const prisma = require("../db/prisma");
  *       example:
  *         id: 1
  *         title: Mining
- *     RatingCategories:
+ *     QaCategories:
  *       type: object
  *       properties:
  *         id:
@@ -39,30 +39,30 @@ const prisma = require("../db/prisma");
 
 /**
  * @swagger
- * /ratingCategories:
+ * /qaCategories:
  *   post:
  *     summary: Create a new rating category
- *     tags: [RatingCategories]
+ *     tags: [QaCategories]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/RatingCategory'
+ *             $ref: '#/components/schemas/QaCategory'
  *     responses:
  *       200:
  *         description: The created rating category.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RatingCategory'
+ *               $ref: '#/components/schemas/QaCategory'
  *       400:
  *         description: Some server error
  *
  */
 router.post("/", async (req, res) => {
   try {
-    await prisma.ratingCategories.create({
+    await prisma.qaCategories.create({
       data: req.body,
     });
     res.json({
@@ -77,24 +77,24 @@ router.post("/", async (req, res) => {
 
 /**
  * @swagger
- * /ratingCategories:
+ * /qaCategories:
  *   get:
  *     summary: Get all rating categories
- *     tags: [RatingCategories]
+ *     tags: [QaCategories]
  *     responses:
  *       200:
  *         description: The created rating categories.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RatingCategories'
+ *               $ref: '#/components/schemas/QaCategories'
  *       400:
  *         description: Some server error
  *
  */
 router.get("/", async (req, res) => {
   try {
-    const results = await prisma.ratingCategories.findMany();
+    const results = await prisma.qaCategories.findMany();
     res.json({
       message: "OK",
       results,
@@ -108,32 +108,38 @@ router.get("/", async (req, res) => {
 
 /**
  * @swagger
- * /ratingCategories/:id:
+ * /qaCategories/:id:
  *   get:
  *     summary: Get a specific rating category
- *     tags: [RatingCategories]
+ *     tags: [QaCategories]
  *     responses:
  *       200:
  *         description: The requested rating category.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RatingCategory'
+ *               $ref: '#/components/schemas/QaCategory'
  *       400:
  *         description: Some server error
  *
  */
 router.get("/:id", async (req, res) => {
   try {
-    const result = await prisma.ratingCategories.findUnique({
+    const result = await prisma.qaCategories.findUnique({
       where: {
         id: Number(req.params.id),
       },
     });
-    res.json({
-      message: "OK",
-      result,
-    });
+    if (result) {
+      res.json({
+        message: "OK",
+        result,
+      });
+    } else {
+      res.status(400).json({
+        message: "Kategori findes ikke",
+      });
+    }
   } catch (e) {
     res.status(400).json({
       message: "Kunne ikke hente kategorien",
@@ -143,24 +149,24 @@ router.get("/:id", async (req, res) => {
 
 /**
  * @swagger
- * /ratingCategories/:id:
+ * /qaCategories/:id:
  *   put:
  *     summary: Change a rating category
- *     tags: [RatingCategories]
+ *     tags: [QaCategories]
  *     responses:
  *       200:
  *         description: The rating category has been changed.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RatingCategory'
+ *               $ref: '#/components/schemas/QaCategory'
  *       400:
  *         description: Some server error
  *
  */
 router.put("/:id", async (req, res) => {
   try {
-    await prisma.ratingCategories.update({
+    await prisma.qaCategories.update({
       where: {
         id: Number(req.params.id),
       },
@@ -178,31 +184,37 @@ router.put("/:id", async (req, res) => {
 
 /**
  * @swagger
- * /ratingCategories/:id:
+ * /qaCategories/:id:
  *   delete:
  *     summary: Delete a rating category
- *     tags: [RatingCategories]
+ *     tags: [QaCategories]
  *     responses:
  *       200:
  *         description: The rating category has been deleted.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RatingCategory'
+ *               $ref: '#/components/schemas/QaCategory'
  *       400:
  *         description: Some server error
  *
  */
 router.delete("/:id", async (req, res) => {
   try {
-    await prisma.ratingCategories.delete({
+    const deleteResult = await prisma.qaCategories.delete({
       where: {
         id: Number(req.params.id),
       },
     });
-    res.json({
-      message: "OK",
-    });
+    if (deleteResult) {
+      res.json({
+        message: "OK",
+      });
+    } else {
+      res.status(400).json({
+        message: "Kategorien findes ikke",
+      });
+    }
   } catch (e) {
     res.status(400).json({
       message: "Kunne ikke slette kategorien",
