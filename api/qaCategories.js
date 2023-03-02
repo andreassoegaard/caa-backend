@@ -5,6 +5,8 @@ const router = express.Router();
 // Require prisma to interact with the DB
 const prisma = require("../db/prisma");
 
+const validateToken = require("../middlewares/validateToken");
+
 /**
  * @swagger
  * components:
@@ -60,7 +62,7 @@ const prisma = require("../db/prisma");
  *         description: Some server error
  *
  */
-router.post("/", async (req, res) => {
+router.post("/", validateToken, async (req, res) => {
   try {
     await prisma.qaCategories.create({
       data: req.body,
@@ -92,7 +94,7 @@ router.post("/", async (req, res) => {
  *         description: Some server error
  *
  */
-router.get("/", async (req, res) => {
+router.get("/", validateToken, async (req, res) => {
   try {
     const results = await prisma.qaCategories.findMany();
     res.json({
@@ -125,7 +127,7 @@ router.get("/", async (req, res) => {
  *         description: Some server error
  *
  */
-router.get("/:id", async (req, res) => {
+router.get("/:id", validateToken, async (req, res) => {
   try {
     const result = await prisma.qaCategories.findUnique({
       where: {
@@ -166,7 +168,7 @@ router.get("/:id", async (req, res) => {
  *         description: Some server error
  *
  */
-router.put("/:id", async (req, res) => {
+router.put("/:id", validateToken, async (req, res) => {
   try {
     await prisma.qaCategories.update({
       where: {
@@ -201,7 +203,7 @@ router.put("/:id", async (req, res) => {
  *         description: Some server error
  *
  */
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", validateToken, async (req, res) => {
   try {
     const deleteResult = await prisma.qaCategories.delete({
       where: {
