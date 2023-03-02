@@ -169,12 +169,14 @@ router.get("/:id", validateToken, async (req, res) => {
  */
 router.put("/:id", validateToken, async (req, res) => {
   try {
-    await prisma.qaCategories.update({
+    console.log(req.body);
+    const result = await prisma.qaCategories.update({
       where: {
         id: Number(req.params.id),
       },
       data: req.body,
     });
+    console.log(result);
     res.json({
       message: "OK",
     });
