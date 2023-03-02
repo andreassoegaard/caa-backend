@@ -100,6 +100,7 @@ router.get("/", async (req, res) => {
       results,
     });
   } catch (e) {
+    console.log(e);
     res.status(400).json({
       message: "Kunne ikke hente kategorierne",
       error: e,
