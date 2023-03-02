@@ -33,12 +33,6 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
-
-// Get the endpoints
-const auth = require("./api/auth");
-const ratingCategories = require("./api/ratingCategories");
-const ratingFactors = require("./api/ratingFactors");
-
 app.use(helmet());
 app.disable("x-powered-by");
 app.use(express.urlencoded({ extended: true }));
@@ -78,9 +72,12 @@ app.use((req, res, next) => {
 });
 
 // Use the endpoints
+const auth = require("./api/auth");
+const ratingCategories = require("./api/qaCategories");
+const ratingFactors = require("./api/qaFactors");
 app.use("/api/auth", auth);
-app.use("/api/ratingCategories", ratingCategories);
-app.use("/api/ratingFactors", ratingFactors);
+app.use("/api/qaCategories", ratingCategories);
+app.use("/api/qaFactors", ratingFactors);
 
 // Start the server
 app.listen(port, () => {

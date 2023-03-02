@@ -22,40 +22,40 @@ model RefreshTokens {
   token String @unique
 }
 
-model RatingCategories {
-  id            Int             @id @default(autoincrement())
-  name          String
-  ratingFactors RatingFactors[]
-  companies     Companies[]
+model QaCategories {
+  id        Int         @id @default(autoincrement())
+  name      String
+  qaFactors QaFactors[]
+  companies Companies[]
 }
 
-model RatingFactors {
-  id                   Int                    @id @default(autoincrement())
+model QaFactors {
+  id                   Int                @id @default(autoincrement())
   name                 String
   description          String?
   importance           Int
-  category             RatingCategories       @relation(fields: [categoryId], references: [id])
+  category             QaCategories       @relation(fields: [categoryId], references: [id])
   categoryId           Int
-  ratingFactorsAnswers RatingFactorsAnswers[]
+  ratingFactorsAnswers QaFactorsAnswers[]
 }
 
-model RatingFactorsAnswers {
-  id             Int           @id @default(autoincrement())
+model QaFactorsAnswers {
+  id             Int       @id @default(autoincrement())
   answer         String
   rating         Int
-  company        Companies     @relation(fields: [companyId], references: [id])
+  company        Companies @relation(fields: [companyId], references: [id])
   companyId      Int
-  ratingFactor   RatingFactors @relation(fields: [ratingFactorId], references: [id])
+  ratingFactor   QaFactors @relation(fields: [ratingFactorId], references: [id])
   ratingFactorId Int
 }
 
 model Companies {
-  id                   Int                    @id @default(autoincrement())
+  id                   Int                @id @default(autoincrement())
   name                 String
   symbol               String
-  ratingCategory       RatingCategories       @relation(fields: [ratingCategoryId], references: [id])
+  ratingCategory       QaCategories       @relation(fields: [ratingCategoryId], references: [id])
   ratingCategoryId     Int
-  ratingFactorsAnswers RatingFactorsAnswers[]
+  ratingFactorsAnswers QaFactorsAnswers[]
   quotes               Quotes[]
 }
 

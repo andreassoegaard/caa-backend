@@ -9,7 +9,7 @@ const prisma = require("../db/prisma");
  * @swagger
  * components:
  *   schemas:
- *     RatingFactor:
+ *     QaFactor:
  *       type: object
  *       required:
  *         - name
@@ -37,7 +37,7 @@ const prisma = require("../db/prisma");
  *         description: Ligger der warrants, optioner, mv?
  *         importance: 1
  *         categoryId: 2
- *     RatingFactors:
+ *     QaFactors:
  *       type: object
  *       properties:
  *         id:
@@ -65,30 +65,30 @@ const prisma = require("../db/prisma");
 
 /**
  * @swagger
- * /ratingFactors:
+ * /qaFactors:
  *   post:
  *     summary: Create a new rating factor
- *     tags: [RatingFactors]
+ *     tags: [QaFactors]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/RatingFactor'
+ *             $ref: '#/components/schemas/QaFactor'
  *     responses:
  *       200:
  *         description: The created rating factor.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RatingFactor'
+ *               $ref: '#/components/schemas/QaFactor'
  *       400:
  *         description: Some server error
  *
  */
 router.post("/", async (req, res) => {
   try {
-    await prisma.ratingFactors.create({
+    await prisma.qaFactors.create({
       data: req.body,
     });
     res.json({
@@ -103,24 +103,24 @@ router.post("/", async (req, res) => {
 
 /**
  * @swagger
- * /ratingFactors/:categoryId:
+ * /qaFactors/:categoryId:
  *   get:
  *     summary: Get rating factors based on category
- *     tags: [RatingFactors]
+ *     tags: [QaFactors]
  *     responses:
  *       200:
  *         description: The requested rating factors based on category.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RatingFactors'
+ *               $ref: '#/components/schemas/QaFactors'
  *       400:
  *         description: Some server error
  *
  */
 router.get("/:categoryId", async (req, res) => {
   try {
-    const result = await prisma.ratingFactors.findMany({
+    const result = await prisma.qaFactors.findMany({
       where: {
         categoryId: Number(req.params.categoryId),
       },
@@ -138,24 +138,24 @@ router.get("/:categoryId", async (req, res) => {
 
 /**
  * @swagger
- * /ratingFactors/:id:
+ * /qaFactors/:id:
  *   put:
  *     summary: Change a specific rating factor
- *     tags: [RatingFactors]
+ *     tags: [QaFactors]
  *     responses:
  *       200:
  *         description: The rating factor has been changed.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RatingFactor'
+ *               $ref: '#/components/schemas/QaFactor'
  *       400:
  *         description: Some server error
  *
  */
 router.put("/:id", async (req, res) => {
   try {
-    await prisma.ratingFactors.update({
+    await prisma.qaFactors.update({
       where: {
         id: Number(req.params.id),
       },
@@ -173,31 +173,37 @@ router.put("/:id", async (req, res) => {
 
 /**
  * @swagger
- * /ratingFactors/:id:
+ * /qaFactors/:id:
  *   delete:
  *     summary: Delete a specific rating factor
- *     tags: [RatingFactors]
+ *     tags: [QaFactors]
  *     responses:
  *       200:
  *         description: The rating factor has been deleted.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RatingFactor'
+ *               $ref: '#/components/schemas/QaFactor'
  *       400:
  *         description: Some server error
  *
  */
 router.delete("/:id", async (req, res) => {
   try {
-    await prisma.ratingFactors.delete({
+    const deleteResult = await prisma.qaFactors.delete({
       where: {
         id: Number(req.params.id),
       },
     });
-    res.json({
-      message: "OK",
-    });
+    if (deleteResult) {
+      res.json({
+        message: "OK",
+      });
+    } else {
+      res.status(400).json({
+        message: "Faktoren findes ikke",
+      });
+    }
   } catch (e) {
     res.status(400).json({
       message: "Kunne ikke slette faktoren",
