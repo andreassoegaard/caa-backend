@@ -4,7 +4,6 @@ const router = express.Router();
 
 // Require prisma to interact with the DB
 const prisma = require("../db/prisma");
-
 const validateToken = require("../middlewares/validateToken");
 
 /**

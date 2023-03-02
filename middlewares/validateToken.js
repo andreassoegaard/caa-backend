@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-export default validateToken = (req, res, next) => {
+const validateToken = (req, res, next) => {
   //get token from request header
   const authHeader = req.headers["authorization"];
   const token = authHeader.split(" ")[1];
@@ -15,3 +15,5 @@ export default validateToken = (req, res, next) => {
     }
   }); //end of jwt.verify()
 };
+
+module.exports = validateToken;
