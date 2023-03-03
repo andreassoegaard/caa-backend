@@ -123,7 +123,7 @@ router.get("/:categoryId", async (req, res) => {
   try {
     const results = await prisma.qaFactors.findMany({
       where: {
-        _categoryId: Number(req.params.categoryId),
+        categoryId: Number(req.params.categoryId),
       },
       orderBy: {
         importance: { sort: "asc" },
