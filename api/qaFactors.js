@@ -125,6 +125,9 @@ router.get("/:categoryId", async (req, res) => {
       where: {
         categoryId: Number(req.params.categoryId),
       },
+      orderBy: {
+        importance: { sort: "asc" },
+      },
     });
     res.json({
       message: "OK",
