@@ -133,6 +133,7 @@ router.get("/:id", validateToken, async (req, res) => {
         id: Number(req.params.id),
       },
     });
+    console.log(result);
     if (result) {
       res.json({
         message: "OK",
@@ -179,6 +180,7 @@ router.put("/:id", validateToken, async (req, res) => {
       message: "OK",
     });
   } catch (e) {
+    console.log(e);
     res.status(400).json({
       message: "Kunne ikke opdatere kategorien",
       error: JSON.stringify(e),
