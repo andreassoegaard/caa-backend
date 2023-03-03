@@ -179,8 +179,10 @@ router.put("/:id", validateToken, async (req, res) => {
       message: "OK",
     });
   } catch (e) {
+    console.log(e);
     res.status(400).json({
       message: "Kunne ikke opdatere kategorien",
+      error: e,
     });
   }
 });
