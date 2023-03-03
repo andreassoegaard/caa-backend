@@ -120,14 +120,14 @@ router.post("/", async (req, res) => {
  */
 router.get("/:categoryId", async (req, res) => {
   try {
-    const result = await prisma.qaFactors.findMany({
+    const results = await prisma.qaFactors.findMany({
       where: {
         categoryId: Number(req.params.categoryId),
       },
     });
     res.json({
       message: "OK",
-      result,
+      results,
     });
   } catch (e) {
     res.status(400).json({
