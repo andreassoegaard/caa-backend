@@ -111,6 +111,27 @@ router.post("/logout", async (req, res) => {
   }
 });
 
+router.get("/users", async (req, res) => {
+  try {
+    const results = await prisma.users.findMany({
+      select: {
+        name: true,
+        email: true,
+      },
+    });
+    res.json({
+      message: "OK",
+      results,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({
+      message: "Kunne ikke hente brugerne",
+      error: e,
+    });
+  }
+});
+
 const validateMiddleware = (req, res, next) => {
   if (!req.body.token) {
     res.status(400).json({
