@@ -23,10 +23,11 @@ model RefreshTokens {
 }
 
 model QaCategories {
-  id        Int         @id @default(autoincrement())
-  name      String
-  qaFactors QaFactors[]
-  companies Companies[]
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String?
+  qaFactors   QaFactors[]
+  companies   Companies[]
 }
 
 model QaFactors {
