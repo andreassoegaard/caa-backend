@@ -86,8 +86,9 @@ const prisma = require("../db/prisma");
  *         description: Some server error
  *
  */
-router.post("/", async (req, res) => {
+router.post("/:categoryId", async (req, res) => {
   try {
+    req.body.categoryId = Number(req.params.categoryId);
     await prisma.qaFactors.create({
       data: req.body,
     });
