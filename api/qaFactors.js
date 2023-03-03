@@ -139,6 +139,42 @@ router.get("/:categoryId", async (req, res) => {
 
 /**
  * @swagger
+ * /qaFactors/:categoryId/:factorId:
+ *   get:
+ *     summary: Get rating factor based on factor id
+ *     tags: [QaFactors]
+ *     responses:
+ *       200:
+ *         description: The requested rating factor based on id.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/QaFactor'
+ *       400:
+ *         description: Some server error
+ *
+ */
+router.get("/:categoryId/:factorId", async (req, res) => {
+  try {
+    const result = await prisma.qaFactors.findUnique({
+      where: {
+        id: Number(req.params.factorId),
+        categoryId: Number(req.params.categoryId),
+      },
+    });
+    res.json({
+      message: "OK",
+      result,
+    });
+  } catch (e) {
+    res.status(400).json({
+      message: "Kunne ikke hente faktoren",
+    });
+  }
+});
+
+/**
+ * @swagger
  * /qaFactors/:id:
  *   put:
  *     summary: Change a specific rating factor
