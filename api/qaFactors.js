@@ -159,7 +159,6 @@ router.get("/:categoryId/:factorId", async (req, res) => {
     const result = await prisma.qaFactors.findUnique({
       where: {
         id: Number(req.params.factorId),
-        categoryId: Number(req.params.categoryId),
       },
     });
     res.json({
