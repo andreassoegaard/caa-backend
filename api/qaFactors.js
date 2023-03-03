@@ -191,6 +191,7 @@ router.get("/:categoryId/:factorId", async (req, res) => {
  */
 router.put("/:id", async (req, res) => {
   try {
+    req.body.importance = Number(req.body.importance);
     await prisma.qaFactors.update({
       where: {
         id: Number(req.params.id),
