@@ -222,6 +222,11 @@ router.put("/:id", async (req, res) => {
  */
 router.delete("/:id", async (req, res) => {
   try {
+    await prisma.qaFactorsAnswers.deleteMany({
+      where: {
+        companyId: Number(req.params.id),
+      },
+    });
     const deleteResult = await prisma.companies.delete({
       where: {
         id: Number(req.params.id),
@@ -233,12 +238,12 @@ router.delete("/:id", async (req, res) => {
       });
     } else {
       res.status(400).json({
-        message: "Faktoren findes ikke",
+        message: "Virksomheden findes ikke",
       });
     }
   } catch (e) {
     res.status(400).json({
-      message: "Kunne ikke slette faktoren",
+      message: "Kunne ikke slette virksomheden",
     });
   }
 });
