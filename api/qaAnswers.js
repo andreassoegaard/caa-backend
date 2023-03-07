@@ -26,3 +26,5 @@ router.put("/:companyId/:qaCategoryId", async (req, res) => {
     });
   }
 });
+
+module.exports = router;
