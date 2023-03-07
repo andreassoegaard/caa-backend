@@ -68,7 +68,7 @@ router.post("/", validateToken, async (req, res) => {
     });
     res.json({
       message: "OK",
-      result,
+      result: result.id,
     });
   } catch (e) {
     console.log(e);
