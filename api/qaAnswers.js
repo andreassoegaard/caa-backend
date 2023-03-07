@@ -8,9 +8,10 @@ const prisma = require("../db/prisma");
 router.put("/:companyId/:qaCategoryId", async (req, res) => {
   try {
     const transactions = [];
+    const allAnswers = await prisma.qaFactorsAnswers.findMany();
+    console.log(allAnswers);
     req.body.answers.forEach(async (element) => {
       // console.log(element);
-      const allAnswers = await prisma.qaFactorsAnswers.findMany();
       console.log({
         log: allAnswers,
         element,
