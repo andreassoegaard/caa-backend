@@ -26,6 +26,7 @@ router.put("/:companyId/:qaCategoryId", async (req, res) => {
         };
         answersToPost.push(object);
       }
+      answersToPost.push(checkIfAnswered);
     });
     res.json({
       message: "OK",
