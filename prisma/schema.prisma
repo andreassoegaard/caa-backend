@@ -43,8 +43,8 @@ model QaFactors {
 
 model QaFactorsAnswers {
   id           Int          @id @default(autoincrement())
-  answer       String
-  rating       Int
+  answer       String?
+  rating       Int?
   company      Companies    @relation(fields: [companyId], references: [id])
   companyId    Int
   qaFactor     QaFactors    @relation(fields: [qaFactorId], references: [id])
