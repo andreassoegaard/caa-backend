@@ -237,6 +237,7 @@ router.delete("/:id", validateToken, async (req, res) => {
       }
     }
   } catch (e) {
+    console.log(e);
     res.status(400).json({
       message: "Kunne ikke slette kategorien",
     });
