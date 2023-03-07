@@ -17,6 +17,7 @@ router.put("/:companyId/:qaCategoryId", async (req, res) => {
           qaFactorId: Number(element.qaFactorId),
         },
       });
+      console.log(checkIfAnswered);
       if (!checkIfAnswered) {
         const object = {
           answer: element.answer,
