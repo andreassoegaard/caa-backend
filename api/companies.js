@@ -88,11 +88,12 @@ const prisma = require("../db/prisma");
  */
 router.post("/", async (req, res) => {
   try {
-    await prisma.companies.create({
+    const result = await prisma.companies.create({
       data: req.body,
     });
     res.json({
       message: "OK",
+      result: result.id,
     });
   } catch (e) {
     res.status(400).json({
