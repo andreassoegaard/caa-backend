@@ -23,22 +23,22 @@ model RefreshTokens {
 }
 
 model QaCategories {
-  id                   Int                @id @default(autoincrement())
-  name                 String
-  description          String?
-  qaFactors            QaFactors[]
-  companies            Companies[]
-  ratingFactorsAnswers QaFactorsAnswers[]
+  id               Int                @id @default(autoincrement())
+  name             String
+  description      String?
+  qaFactors        QaFactors[]
+  companies        Companies[]
+  qaFactorsAnswers QaFactorsAnswers[]
 }
 
 model QaFactors {
-  id                   Int                @id @default(autoincrement())
-  name                 String
-  description          String?
-  importance           Int
-  category             QaCategories       @relation(fields: [categoryId], references: [id])
-  categoryId           Int
-  ratingFactorsAnswers QaFactorsAnswers[]
+  id               Int                @id @default(autoincrement())
+  name             String
+  description      String?
+  importance       Int
+  category         QaCategories       @relation(fields: [categoryId], references: [id])
+  categoryId       Int
+  qaFactorsAnswers QaFactorsAnswers[]
 }
 
 model QaFactorsAnswers {
@@ -54,13 +54,13 @@ model QaFactorsAnswers {
 }
 
 model Companies {
-  id                   Int                @id @default(autoincrement())
-  name                 String
-  symbol               String
-  ratingCategory       QaCategories       @relation(fields: [ratingCategoryId], references: [id])
-  ratingCategoryId     Int
-  ratingFactorsAnswers QaFactorsAnswers[]
-  quotes               Quotes[]
+  id               Int                @id @default(autoincrement())
+  name             String
+  symbol           String
+  qaCategory       QaCategories       @relation(fields: [qaCategoryId], references: [id])
+  qaCategoryId     Int
+  qaFactorsAnswers QaFactorsAnswers[]
+  quotes           Quotes[]
 }
 
 model Quotes {
