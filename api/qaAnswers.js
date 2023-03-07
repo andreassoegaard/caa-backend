@@ -11,18 +11,13 @@ router.put("/:companyId/:qaCategoryId", async (req, res) => {
     const allAnswers = await prisma.qaFactorsAnswers.findMany();
     console.log(allAnswers);
     req.body.answers.forEach(async (element) => {
-      // console.log(element);
-      console.log({
-        log: allAnswers,
-        element,
-      });
       const checkIfAnswered = allAnswers.filter(
         (item) =>
           item.companyId === Number(req.params.companyId) &&
           item.qaCategoryId === Number(req.params.qaCategoryId) &&
           item.qaFactorId === Number(element.qaFactorId)
       );
-      // console.log(checkIfAnswered);
+      console.log({ checkIfAnswered });
       if (checkIfAnswered.length === 0) {
         const object = {
           answer: element.answer,
