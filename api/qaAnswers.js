@@ -16,7 +16,18 @@ router.put("/:companyId/:qaCategoryId", async (req, res) => {
           qaFactorId: Number(element.qaFactorId),
         },
       });
-      answers.push(checkIfAnswered);
+      if (!checkIfAnswered) {
+        const object = {
+          answer: element.answer,
+          rating: Number(element.rating),
+          companyId: Number(req.params.companyId),
+          qaCategoryId: Number(req.params.qaCategoryId),
+          qaFactorId: Number(element.id),
+        };
+        await prisma.qaFactorsAnswers.create({
+          data: object,
+        });
+      }
     });
     res.json({
       message: "OK",
