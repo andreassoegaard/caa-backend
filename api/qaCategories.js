@@ -221,6 +221,16 @@ router.delete("/:id", validateToken, async (req, res) => {
         message: `Kategorien kan ikke slettes, da den er koblet på ${companiesWithThisId.length} virksomheder. Fjern den fra alle virksomhederne og prøv igen.`,
       });
     } else {
+      await prisma.qaFactors.deleteMany({
+        where: {
+          categoryId: Number(req.params.id),
+        },
+      });
+      await prisma.qaFactorsAnswers.deleteMany({
+        where: {
+          qaCategoryId: Number(req.params.id),
+        },
+      });
       const deleteResult = await prisma.qaCategories.delete({
         where: {
           id: Number(req.params.id),
