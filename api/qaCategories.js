@@ -135,7 +135,7 @@ router.get("/:id", validateToken, async (req, res) => {
         id: Number(req.params.id),
       },
     });
-    console.log(result);
+
     if (result) {
       res.json({
         message: "OK",
@@ -209,19 +209,32 @@ router.put("/:id", validateToken, async (req, res) => {
  */
 router.delete("/:id", validateToken, async (req, res) => {
   try {
-    const deleteResult = await prisma.qaCategories.delete({
+    // Find companies that has this QA Category ID
+    const companiesWithThisId = await prisma.companies.findMany({
       where: {
-        id: Number(req.params.id),
+        ratingCategoryId: Number(req.params.id),
       },
     });
-    if (deleteResult) {
-      res.json({
-        message: "OK",
+
+    if (companiesWithThisId && companiesWithThisId.length > 0) {
+      res.status(400).json({
+        message: `Kategorien kan ikke slettes, da den er koblet på ${companiesWithThisId.length} virksomheder. Fjern den fra alle virksomhederne og prøv igen.`,
       });
     } else {
-      res.status(400).json({
-        message: "Kategorien findes ikke",
+      const deleteResult = await prisma.qaCategories.delete({
+        where: {
+          id: Number(req.params.id),
+        },
       });
+      if (deleteResult) {
+        res.json({
+          message: "OK",
+        });
+      } else {
+        res.status(400).json({
+          message: "Kategorien findes ikke",
+        });
+      }
     }
   } catch (e) {
     res.status(400).json({
