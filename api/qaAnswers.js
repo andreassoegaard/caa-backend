@@ -51,4 +51,23 @@ router.put("/:companyId/:qaCategoryId", async (req, res) => {
   }
 });
 
+router.get("/:companyId", async (req, res) => {
+  try {
+    const results = await prisma.qaFactorsAnswers.findMany({
+      where: {
+        companyId: Number(req.params.companyId),
+      },
+    });
+    res.json({
+      message: "OK",
+      results,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({
+      message: "Kunne ikke opdatere faktoren",
+    });
+  }
+});
+
 module.exports = router;
