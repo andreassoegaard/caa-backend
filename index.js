@@ -2,6 +2,7 @@ const port = 3000;
 const express = require("express");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
+const morgan = require("morgan");
 
 // Load environment variables
 dotenv.config();
@@ -34,6 +35,7 @@ const options = {
 const specs = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use(helmet());
+app.use(morgan("dev"));
 app.disable("x-powered-by");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
