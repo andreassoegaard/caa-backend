@@ -9,6 +9,7 @@ router.put("/:companyId/:qaCategoryId", async (req, res) => {
   try {
     const transactions = [];
     req.body.answers.forEach(async (element) => {
+      console.log(element);
       const checkIfAnswered = await prisma.qaFactorsAnswers.findFirst({
         where: {
           companyId: Number(req.params.companyId),
