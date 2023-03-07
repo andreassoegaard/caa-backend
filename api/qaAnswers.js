@@ -7,6 +7,7 @@ const prisma = require("../db/prisma");
 
 router.put("/:companyId/:qaCategoryId", async (req, res) => {
   try {
+    const answers = [];
     req.body.answers.forEach(async (element) => {
       const checkIfAnswered = await prisma.qaFactorsAnswers.findFirst({
         where: {
@@ -15,10 +16,11 @@ router.put("/:companyId/:qaCategoryId", async (req, res) => {
           qaFactorId: Number(element.qaFactorId),
         },
       });
-      console.log(checkIfAnswered);
+      answers.push(checkIfAnswered);
     });
     res.json({
       message: "OK",
+      answers,
     });
   } catch (e) {
     res.status(400).json({
