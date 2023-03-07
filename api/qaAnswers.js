@@ -8,7 +8,7 @@ const prisma = require("../db/prisma");
 router.put("/:companyId/:qaCategoryId", async (req, res) => {
   try {
     req.body.answers.forEach(async (element) => {
-      const checkIfAnswered = await prisma.qaFactorsAnswers.findUnique({
+      const checkIfAnswered = await prisma.qaFactorsAnswers.findFirst({
         where: {
           companyId: Number(req.params.companyId),
           qaCategoryId: Number(req.params.qaCategoryId),
