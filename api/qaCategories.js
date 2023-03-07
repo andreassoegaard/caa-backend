@@ -63,11 +63,12 @@ const validateToken = require("../middlewares/validateToken");
  */
 router.post("/", validateToken, async (req, res) => {
   try {
-    await prisma.qaCategories.create({
+    const result = await prisma.qaCategories.create({
       data: req.body,
     });
     res.json({
       message: "OK",
+      result,
     });
   } catch (e) {
     res.status(400).json({
